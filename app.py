@@ -51,7 +51,7 @@ class Show(db.Model):
               'artist_id': self.artist_id,
               'artist_name' : self.artist.name,
               'artist_image_link': self.artist.image_link,
-              'start_time': self.start_time.strftime("%Y-%m-%dT%H:%M:%S.%f")
+              'start_time': format_datetime(str(self.start_time), format='full')
               }
 
     @property
@@ -257,7 +257,8 @@ def format_datetime(value, format='medium'):
       format="EEEE MMMM, d, y 'at' h:mma"
   elif format == 'medium':
       format="EE MM, dd, y h:mma"
-  return babel.dates.format_datetime(date, format)
+  result = babel.dates.format_datetime(date, format)
+  return result
 
 app.jinja_env.filters['datetime'] = format_datetime
 
